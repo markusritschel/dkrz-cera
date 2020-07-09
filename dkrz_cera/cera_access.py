@@ -79,12 +79,12 @@ class Cera(object):
                         'project_acronym_s']
 
         for key, val in query.items():
-            if not key in valid_kwargs:
-                print(
-                    '{} is not a valid search key. Search keys must be one of {}'.format(key, ', '.join(valid_kwargs)))
+            if key not in valid_kwargs:
+                print(f"{key} is not a valid search key. Search keys must be one of {', '.join(valid_kwargs)}")
             if isinstance(val, (list, tuple)):
                 query[key] = f"+OR+{key}:".join(val)
 
+        # Example: "model_s:bcc-*+variable_s:tas+qc_experiment_s:historicalGHG+OR+qc_experiment_s:historicalNat"
         query_str = '+'.join(['{}:{}'.format(k, v) for k, v in query.items()])
 
         rows = 100

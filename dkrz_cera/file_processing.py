@@ -12,6 +12,9 @@ from pathlib import Path
 from zipfile import ZipFile
 
 
+__all__ = ["unzip_files"]
+
+
 def unzip_files(path):
     """
     Unzip recursively all files in a specific directory tree.

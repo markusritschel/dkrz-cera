@@ -56,12 +56,19 @@ as a mandatory argument.
 
 ToDos
 -----
-- [ ]
+- [x] Routine for scraping the CERA database based on multiple keywords
+- [x] sort files depending on configuration file => creates directory structure automatically during jblob download
+- [x] create intake-esm catalog files => this will be implemented in another package
+- [ ] Try to validate CERA credentials if present
+- [ ] Retrieve CERA credentials either from `.env` file or from environment variable via `os.getenv('CERA_USER')`
+- [ ] implement [click](https://click.palletsprojects.com/) for command line tooling
 
 
 Contact
 -------
-Feel free to contact me via kontakt@markusritschel.de
+Feel free to contact me via git@markusritschel.de.
+For problems or feature requests please open an [issue](https://github.com/markusritschel/dkrz-cera/issues).
+Of course, you are also welcome to contribute and start a pull-request :-)
 
 --------
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>

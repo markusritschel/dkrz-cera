@@ -143,8 +143,18 @@ class CeraQuery(object):
         return ''
 
     def to_jblob(self, download_path, file=None, jblob_log_dir='/tmp/'):
-        """This provides a method to autogenerate shell scripts, which can be used for downloading data from DKRZ's CERA
-        database via Jblob."""
+        """
+        Creates a shell script which downloads assets from CERA by using Jblob.
+
+        Parameters
+        ----------
+        download_path : str
+            Path to the download directory where downloaded assets shall be placed in.
+        file : str
+            Name of the shell file. If not given, default will fall to `jblob_cera_download.sh`
+        jblob_log_dir : str
+            Path to a directory where jblob shall create its log files.
+        """
         self.parent.check_access()
 
         if not file:

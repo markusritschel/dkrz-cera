@@ -14,8 +14,7 @@ import pandas as pd
 import requests
 
 
-CERA_URL = "https://cera-www.dkrz.de/WDCC/ui/cerasearch/cerarest/login/"
-DOWNLOAD_DIR = os.path.join(os.getenv('HOME'), "work/cmip5-download")
+__all__ = ["Cera", "CeraQuery"]
 
 
 class JSONObject(object):

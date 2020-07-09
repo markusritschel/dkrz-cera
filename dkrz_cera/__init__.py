@@ -9,6 +9,7 @@
 #
 from pkg_resources import get_distribution, DistributionNotFound
 from .cera_access import *
+from .file_processing import *
 
 try:
     # Change here if project is renamed and does not equal the package name

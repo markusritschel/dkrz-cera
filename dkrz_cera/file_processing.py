@@ -42,8 +42,8 @@ def unzip_files(path):
             print("Unpacking {} netCDF files from {}...".format(netcdfs_in_zip, zip_file))
             ZipFile(zip_file).extractall(path=os.path.dirname(zip_file))
             os.remove(zip_file)
-    print(f'{count_netcdfs} netCDF files out of {count_zips} zip files successfully extracted. '
-          f'Deleted zip files after extraction.')
+    print(f"{count_netcdfs} netCDF files out of {count_zips} zip files successfully extracted. "
+          f"Deleted zip files after extraction.")
 
     return
 

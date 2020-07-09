@@ -106,7 +106,7 @@ class Cera(object):
                 values = [entry.entry_acronym_s,
                           entry.model_s,
                           entry.qc_experiment_s,
-                          entry.topic_name_ss,
+                          # entry.topic_name_ss,
                           entry.variable_s,
                           entry.frequency_s,
                           entry.entry_name_s,

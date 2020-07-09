@@ -24,9 +24,9 @@ class JSONObject(object):
 
 class Cera(object):
     def __init__(self):
-        self.login_url = CERA_URL
-        self.__username = None  # os.getenv('CERA_USER')
-        self.__password = None  # os.getenv('CERA_PASS')
+        self.login_url = "https://cera-www.dkrz.de/WDCC/ui/cerasearch/login"
+        self.__username = None
+        self.__password = None
 
     def check_access(self):
         """Validates credentials for accessing CERA database"""

@@ -18,6 +18,8 @@ __all__ = ["Cera", "CeraQuery"]
 
 
 class JSONObject(object):
+    """A helper class to access the JSON elements from the CERA request like attributes"""
+
     def __init__(self, d):
         self.__dict__ = d
 

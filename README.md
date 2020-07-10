@@ -2,6 +2,7 @@ dkrz-cera
 =========
 [![GitHub license](https://img.shields.io/github/license/markusritschel/dkrz-cera)](https://github.com/markusritschel/dkrz-cera/blob/master/LICENSE)
 ![build](https://github.com/markusritschel/dkrz-cera/workflows/build/badge.svg)
+[![codecov](https://codecov.io/gh/markusritschel/dkrz-cera/branch/master/graph/badge.svg)](https://codecov.io/gh/markusritschel/dkrz-cera)
 
 This package provides an interface to the CERA database of the DKRZ (_Deutsches Klimarechenzentrum_).
 This allows the user to scrape the database for CMIP data, for example, and prepare files for the remote download via 

@@ -39,7 +39,7 @@ def unzip_files(path):
             # TODO: maybe parallel processing?
             netcdfs_in_zip = len([f for f in ZipFile(zip_file).namelist() if f.endswith('.nc')])
             count_netcdfs += netcdfs_in_zip
-            print("Unpacking {} netCDF files from {}...".format(netcdfs_in_zip, zip_file))
+            print("Unpacking {: 2} netCDF files from {}...".format(netcdfs_in_zip, zip_file))
             ZipFile(zip_file).extractall(path=os.path.dirname(zip_file))
             os.remove(zip_file)
     print(f"{count_netcdfs} netCDF files out of {count_zips} zip files successfully extracted. "

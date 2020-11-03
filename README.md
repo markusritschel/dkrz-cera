@@ -13,7 +13,12 @@ a program written in Java and provided by the DKRZ.
 
 Installation
 ------------
-Clone the repository to your machine
+Via pip:
+```bash
+pip install git+https://github.com/markusritschel/dkrz-cera.git
+```
+
+Or, for installing from the sources, simply clone this repo via
 ```bash
 git clone https://github.com/markusritschel/dkrz-cera.git
 ```

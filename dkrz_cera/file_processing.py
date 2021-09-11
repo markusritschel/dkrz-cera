@@ -33,7 +33,7 @@ def unzip_files(path):
         all_zip_files = [x for x in path.rglob('*.zip') if x.is_file()]
         count_zips += len(all_zip_files)
         if not all_zip_files:
-            print("No zip files found.")
+            print("No remaining zip files found.")
             break
         for zip_file in all_zip_files:
             # TODO: maybe parallel processing?
@@ -41,6 +41,7 @@ def unzip_files(path):
             count_netcdfs += netcdfs_in_zip
             print("Unpacking {} netCDF files from {}...".format(netcdfs_in_zip, zip_file))
             ZipFile(zip_file).extractall(path=os.path.dirname(zip_file))
+            print("Unpacking successfully finished. Remove zip file.")
             os.remove(zip_file)
     print(f"{count_netcdfs} netCDF files out of {count_zips} zip files successfully extracted. "
           f"Deleted zip files after extraction.")

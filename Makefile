@@ -1,124 +1,134 @@
-.PHONY: clean data lint requirements sync_data_to_s3 sync_data_from_s3
+# This is a self-documenting Makefile.
+# For details, check out the following resources:
+# https://gist.github.com/klmr/575726c7e05d8780505a
+# https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 
-#################################################################################
-# GLOBALS                                                                       #
-#################################################################################
+# ======= Put your targets etc. between here and the line which is starting with ".DEFAULT_GOAL" =======
+# Document any rules by adding a single line starting with ## right before the rule (see examples below)
+# ======================================================================================================
 
-PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
-PROFILE = default
-PROJECT_NAME = dkrz-cera
-PYTHON_INTERPRETER = python3
+# If you have an .env file
+# include .env
 
-ifeq (,$(shell which conda))
-HAS_CONDA=False
+# Check if Mamba is installed
+CONDA := $(shell command -v conda 2> /dev/null)
+MAMBA := $(shell command -v mamba 2> /dev/null)
+
+# Set the package manager to use
+ifeq ($(MAMBA),)
+    PACKAGE_MANAGER := conda
 else
-HAS_CONDA=True
+    PACKAGE_MANAGER := mamba
 endif
 
-#################################################################################
-# COMMANDS                                                                      #
-#################################################################################
+
+.PHONY: cleanup clean-jupyter-book clean-pyc, clean-logs, documentation, book, save-requirements, requirements, src-available, conda-env, test-requirements, tests, clear-images, convert-images, figures, crop-pdf, crop-png, show-help
+
+## Clean-up python artifacts, logs and jupyter-book built
+cleanup: clean-pyc clean-logs clean-docs
+
+## Cleanup documentation built
+clean-docs:
+	rm -rf doc/_build/*
+	jb clean --all docs/
+
+# Remove Python file artifacts
+clean-pyc:
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '*~' -exec rm -f {} +
+	find . -name '__pycache__' -exec rm -fr {} +
+
+
+## Remove all log files
+clean-logs:
+	find ./logs -iname '*.log' -type f -exec rm {} +
+
+
+## Build the code documentation with Jupyter-Book
+documentation:
+	jb build docs/ -v
+
+
+
+## Run flake8 linter
+lint:
+	flake8 ./src/
+
+
+## Synchronize Jupyter notebooks according to the rules in pyproject.toml
+sync-notebooks:
+	jupytext --sync notebooks/**/*.ipynb
+
+
+## Update the requirements.txt
+save-requirements:
+	pip list --format=freeze > requirements.txt
+
+
+## Create a conda environment.yml file
+save-conda-env:
+	@pip_packages=$$(conda env export | grep -A9999 ".*- pip:" | grep -v "^prefix: ") ;\
+	 conda env export --from-history | grep -v "^prefix: " > environment.yml;\
+	 echo "$$pip_packages" >> environment.yml ;\
+	 sed -i 's/name: base/name: $(CONDA_DEFAULT_ENV)/g' environment.yml
+	@echo exported \"$$CONDA_DEFAULT_ENV\" environment to environment.yml
+
+
+## Create a conda environment named 'dkrz-cera', install packages, and activate it
+conda-env:
+	@echo "Create conda environment 'dkrz-cera"
+	conda create --name dkrz-cera python=3.10 --no-default-packages 
+	@echo "Activate conda environment 'dkrz-cera'"
+	conda activate dkrz-cera
+
+
 
 ## Install Python Dependencies
-requirements: test_environment
-	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
-	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
-
-## Delete all compiled Python files
-clean:
-	find . -type f -name "*.py[co]" -delete
-	find . -type d -name "__pycache__" -delete
-
-## Lint using flake8
-lint:
-	flake8 dkrz_cera
-
-## Set up python interpreter environment
-create_environment:
-ifeq (True,$(HAS_CONDA))
-		@echo ">>> Detected conda, creating conda environment."
-ifeq (3,$(findstring 3,$(PYTHON_INTERPRETER)))
-	conda create --name $(PROJECT_NAME) python=3
+install-requirements:
+	@echo "Install required packages into current environment"
+ifeq ($(CONDA),)
+	@echo "Conda not found, using pip."
+	python -m pip install -U pip setuptools wheel
+	python -m pip install -r requirements.txt
 else
-	conda create --name $(PROJECT_NAME) python=2.7
-endif
-		@echo ">>> New conda env created. Activate with:\nsource activate $(PROJECT_NAME)"
-else
-	$(PYTHON_INTERPRETER) -m pip install -q virtualenv virtualenvwrapper
-	@echo ">>> Installing virtualenvwrapper if not already installed.\nMake sure the following lines are in shell startup file\n\
-	export WORKON_HOME=$$HOME/.virtualenvs\nexport PROJECT_HOME=$$HOME/Devel\nsource /usr/local/bin/virtualenvwrapper.sh\n"
-	@bash -c "source `which virtualenvwrapper.sh`;mkvirtualenv $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER)"
-	@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
+	$(PACKAGE_MANAGER) env update --file environment.yml
 endif
 
-## Test python environment is setup correctly
-test_environment:
-	$(PYTHON_INTERPRETER) test_environment.py
 
-#################################################################################
-# PROJECT RULES                                                                 #
-#################################################################################
+## Install requirements for building the docs
+install-doc-requirements:
+	python -m pip install -r docs/requirements.txt
 
 
+## Make the source code as package available
+src-available:
+	pip install -e .
 
-#################################################################################
-# Self Documenting Commands                                                     #
-#################################################################################
 
-.DEFAULT_GOAL := help
+## Check if all packages listed in requirements.txt are installed in the current environment
+test-requirements:
+	@echo "Check if all packages listed in requirements.txt are installed in the current environment:"
+	# the "|| true" prevents the command returning an error if grep does not find a match
+	python -m pip -vvv freeze -r requirements.txt | grep "not installed" || true
 
-# Inspired by <http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html>
-# sed script explained:
-# /^##/:
-# 	* save line in hold space
-# 	* purge line
-# 	* Loop:
-# 		* append newline + line to hold space
-# 		* go to next line
-# 		* if line starts with doc comment, strip comment character off and loop
-# 	* remove target prerequisites
-# 	* append hold space (+ newline) to line
-# 	* replace newline plus comments by `---`
-# 	* print line
-# Separate expressions are necessary because labels cannot be delimited by
-# semicolon; see <http://stackoverflow.com/a/11799865/1968>
-.PHONY: help
-help:
-	@echo "$$(tput bold)Available rules:$$(tput sgr0)"
-	@echo
-	@sed -n -e "/^## / { \
-		h; \
-		s/.*//; \
-		:doc" \
-		-e "H; \
-		n; \
-		s/^## //; \
-		t doc" \
-		-e "s/:.*//; \
-		G; \
-		s/\\n## /---/; \
-		s/\\n/ /g; \
-		p; \
-	}" ${MAKEFILE_LIST} \
-	| LC_ALL='C' sort --ignore-case \
-	| awk -F '---' \
-		-v ncol=$$(tput cols) \
-		-v indent=19 \
-		-v col_on="$$(tput setaf 6)" \
-		-v col_off="$$(tput sgr0)" \
-	'{ \
-		printf "%s%*s%s ", col_on, -indent, $$1, col_off; \
-		n = split($$2, words, " "); \
-		line_length = ncol - indent; \
-		for (i = 1; i <= n; i++) { \
-			line_length -= length(words[i]) + 1; \
-			if (line_length <= 0) { \
-				line_length = ncol - indent - length(words[i]) - 1; \
-				printf "\n%*s ", -indent, " "; \
-			} \
-			printf "%s ", words[i]; \
-		} \
-		printf "\n"; \
-	}' \
-	| more $(shell test $(shell uname) = Darwin && echo '--no-init --raw-control-chars')
+
+## Run pytest for the source code
+tests: test-requirements
+	python -m pytest -v
+
+
+## Test github actions locally
+test-gh-actions:
+	mkdir -p /tmp/artifacts
+	act push --artifact-server-path /tmp/artifacts --container-options "--userns host" --action-offline-mode
+
+
+
+
+
+# ==================== Don't put anything below this line ====================
+# https://www.digitalocean.com/community/tutorials/how-to-use-makefiles-to-automate-repetitive-tasks-on-an-ubuntu-vps
+.DEFAULT_GOAL := show-help
+show-help:
+	@echo "$$(tput bold)Available rules:$$(tput sgr0)";echo;sed -ne"/^## /{h;s/.*//;:d" -e"H;n;s/^## //;td" -e"s/:.*//;G;s/\\n## /---/;s/\\n/ /g;p;}" ${MAKEFILE_LIST}|LC_ALL='C' sort -f|awk -F --- -v n=$$(tput cols) -v i=21 -v a="$$(tput setaf 6)" -v z="$$(tput sgr0)" '{printf"%s%*s%s ",a,-i,$$1,z;m=split($$2,w," ");l=n-i;for(j=1;j<=m;j++){l-=length(w[j])+1;if(l<= 0){l=n-i-length(w[j])-1;printf"\n%*s ",-i," ";}printf"%s ",w[j];}printf"\n";}'|more

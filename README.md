@@ -1,36 +1,38 @@
-dkrz-cera
-=========
-[![GitHub license](https://img.shields.io/github/license/markusritschel/dkrz-cera)](https://github.com/markusritschel/dkrz-cera/blob/master/LICENSE)
-![build](https://github.com/markusritschel/dkrz-cera/workflows/build/badge.svg)
-[![codecov](https://codecov.io/gh/markusritschel/dkrz-cera/branch/master/graph/badge.svg)](https://codecov.io/gh/markusritschel/dkrz-cera)
+# DKRZ-CERA
 
-This package provides an interface to the CERA database of the DKRZ (_Deutsches Klimarechenzentrum_).
+![build](https://github.com/markusritschel/dkrz-cera/actions/workflows/main.yml/badge.svg)
+[![License MIT license](https://img.shields.io/github/license/markusritschel/dkrz-cera)](./LICENSE)
+
+
+This package provides an interface to the CERA database of the DKRZ (Deutsches Klimarechenzentrum).
 This allows the user to scrape the database for CMIP data, for example, and prepare files for the remote download via 
 [Jblob](https://cera-www.dkrz.de/WDCC/ui/cerasearch/info?site=jblob),
 a program written in Java and provided by the DKRZ.
 
 
-
-Installation
-------------
-Via pip:
+## Installation
+Clone this repo via
 ```bash
-pip install git+https://github.com/markusritschel/dkrz-cera.git
+git clone https://github.com/markusritschel/dkrz-cera
+```
+Then, in the new directory (`cd dkrz-cera/`) install the package via:
+```
+pip install .
+```
+or via
+```
+pip install -e .
+```
+if you plan on making changes to the code.
+
+Alternatively, install directly from GitHub via
+```
+pip install 'git+https://github.com/markusritschel/dkrz-cera.git'
 ```
 
-Or, for installing from the sources, simply clone this repo via
-```bash
-git clone https://github.com/markusritschel/dkrz-cera.git
-```
-and then install the package by running 
-```
-python setup.py install
-``` 
-in the directory of the cloned repository.
 
+## Usage
 
-Usage
------
 The database can be scraped by creating an instance of the Cera class and using it's `search` method:
 ```python
 from dkrz_cera import Cera
@@ -62,8 +64,15 @@ This can be done by using the function `unzip_files()` which takes the root path
 as a mandatory argument.
 
 
-ToDos
------
+
+## Testing
+Run `make tests` in the source directory to test the code.
+This will execute both the unit tests and docstring examples (using `pytest`).
+
+Run `make lint` to check code style consistency.
+
+## ToDos
+
 - [x] Routine for scraping the CERA database based on multiple keywords
 - [x] sort files depending on configuration file => creates directory structure automatically during jblob download
 - [x] create intake-esm catalog files => this will be implemented in another package
@@ -72,11 +81,13 @@ ToDos
 - [ ] implement [click](https://click.palletsprojects.com/) for command line tooling
 
 
-Contact
--------
-Feel free to contact me via git@markusritschel.de.
-For problems or feature requests please open an [issue](https://github.com/markusritschel/dkrz-cera/issues).
-Of course, you are also welcome to contribute and start a pull-request :-)
+## Maintainer
+- [markusritschel](https://github.com/markusritschel)
 
---------
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
+## Contact & Issues
+For any questions or issues, please contact me via git@markusritschel.de or open an [issue](https://github.com/markusritschel/dkrz-cera/issues).
+
+
+---
+&copy; Markus Ritschel 2024

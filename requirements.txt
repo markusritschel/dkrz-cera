@@ -9,7 +9,7 @@ sphinx-issues
 sphinx_rtd_theme
 sphinxcontrib-apidoc
 sphinxcontrib-napoleon
-Click
-
+click
+pandas
 pytest
 

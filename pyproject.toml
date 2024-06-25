@@ -17,7 +17,7 @@ dependencies = []
 
 
 [project.scripts]
-dkrz_cera = "dkrz_cera:cli"
+dkrz-cera = "dkrz_cera.cli:main"
 
 [tool.setuptools.dynamic]
 version = {attr = "dkrz_cera.__version__"}

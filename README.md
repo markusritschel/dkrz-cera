@@ -1,6 +1,7 @@
 # DKRZ-CERA
 
-![build](https://github.com/markusritschel/dkrz-cera/actions/workflows/main.yml/badge.svg)
+[![build](https://github.com/markusritschel/dkrz-cera/actions/workflows/main.yml/badge.svg)]([![build](https://github.com/markusritschel/dkrz-cera/actions/workflows/main.yml/badge.svg)
+)
 [![License MIT license](https://img.shields.io/github/license/markusritschel/dkrz-cera)](./LICENSE)
 
 

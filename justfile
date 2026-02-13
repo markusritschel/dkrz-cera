@@ -27,10 +27,10 @@ pdb *ARGS:
     uv run  --group test pytest --pdb --maxfail=10 --pdbcls=IPython.terminal.debugger:TerminalPdb {{ARGS}}
 
 # Run coverage, and build to HTML
-# coverage:
-#     uv run --group test coverage run -m pytest .
-#     uv run --group test coverage report -m
-#     uv run --group test coverage html
+coverage:
+    uv run --group test coverage run -m pytest .
+    uv run --group test coverage report -m
+    uv run --group test coverage html
 
 # Build the project, useful for checking that packaging is correct
 build:
@@ -44,38 +44,53 @@ VERSION := `grep -m1 '^version' pyproject.toml | sed -E 's/version = "(.*)"/\1/'
 version:
     @echo "Current version is {{VERSION}}"
 
+# Compile the documentation
+docs:
+    uv run --group docs sphinx-build -b html docs/ docs/_build/html
+
+# Serve the documentation with live reload
+docs-serve:
+    uv run --group docs sphinx-autobuild --open-browser docs/ docs/_build/html
+
 # Tag the current version in git and put to github
 tag:
-    echo "Tagging version v{{VERSION}}"
+    @echo "Tagging version v{{VERSION}}"
     git tag -a v{{VERSION}} -m "Creating version v{{VERSION}}"
     git push origin v{{VERSION}}
 
 # Remove all build, test, coverage and Python artifacts
-clean: 
-	clean-build
-	clean-pyc
-	clean-test
+clean: clean-build clean-docs clean-pyc clean-test
 
 # Remove build artifacts
 clean-build:
-	rm -fr build/
-	rm -fr dist/
-	rm -fr .eggs/
-	find . -name '*.egg-info' -exec rm -fr {} +
-	find . -name '*.egg' -exec rm -f {} +
+    @echo "Cleaning build artifacts..."
+    @rm -fr build/ dist/ .eggs/
+    @find . -name '*.egg-info' -exec rm -fr {} +
+    @find . -name '*.egg' -exec rm -f {} +
+
+# Remove documentation build artifacts
+clean-docs:
+    @echo "Cleaning documentation build artifacts..."
+    @rm -fr docs/_build/ docs/api/
 
 # Remove Python file artifacts
 clean-pyc:
-	find . -name '*.pyc' -exec rm -f {} +
-	find . -name '*.pyo' -exec rm -f {} +
-	find . -name '*~' -exec rm -f {} +
-	find . -name '__pycache__' -exec rm -fr {} +
+    @echo "Cleaning Python file artifacts..."
+    @find . -name '*.pyc' -exec rm -f {} +
+    @find . -name '*.pyo' -exec rm -f {} +
+    @find . -name '*~' -exec rm -f {} +
+    @find . -name '__pycache__' -exec rm -fr {} +
 
 # Remove test and coverage artifacts
 clean-test:
-	rm -f .coverage
-	rm -fr htmlcov/
-	rm -fr .pytest_cache
+    @echo "Cleaning test and coverage artifacts..."
+    @rm -f .coverage
+    @rm -fr htmlcov/ .pytest_cache
+
+# Test github actions locally
+test-gh-actions:
+	@mkdir -p /tmp/artifacts
+	act push --artifact-server-path /tmp/artifacts --container-options "--userns host" --action-offline-mode
 
 # Publish to PyPI (manual alternative to GitHub Actions)
 publish:

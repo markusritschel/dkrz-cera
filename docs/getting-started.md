@@ -1,8 +1,7 @@
-Getting started
-===============
+# Getting started
 
-Installation
-------------
+## Installation
+
 Clone the repository to your machine
 ```bash
 git clone https://github.com/markusritschel/dkrz-cera.git
@@ -14,15 +13,15 @@ python setup.py install
 in the directory of the cloned repository.
 
 
-Usage
------
+## Usage
+
 The database can be scraped by creating an instance of the Cera class and using it's `search` method:
 ```python
 from dkrz_cera import Cera
 cera = Cera()
 cera.search(variable_s='tas', model_s='ACCESS1-0', qc_experiment_s='historical')
 ```
-This yields a CeraQuery object, which itself provides a tabular view of the request results by the `.df` attribute,
+This yields a `CeraQuery` object, which itself provides a tabular view of the request results by the `.df` attribute,
 as well as a method `to_jblob()`, which creates a bash file executable by Jblob for eventually downloading the datasets from CERA.
 When running this bash file, a directory structure gets created according to the CMIP standards, i.e.
 ```

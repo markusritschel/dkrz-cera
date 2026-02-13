@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding utf-8 -*-
-#
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Author: Markus Ritschel
 # eMail:  git@markusritschel.de
@@ -10,6 +7,6 @@
 import pytest
 
 
-@pytest.fixture()
+@pytest.fixture
 def global_fixture(request):
     return 'Test'

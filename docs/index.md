@@ -1,6 +1,6 @@
 ![](_static/logo.png)
 
-## Introduction
+# Introduction
 
 Welcome to the documentation of DKRZ-CERA!
 
@@ -76,6 +76,21 @@ commands
 ```
 
 
+
+## Contact
+
+For any questions or issues, please contact me via git@markusritschel.de or open an [issue](https://github.com/markusritschel/dkrz-cera/issues).
+
+
+```{toctree}
+:hidden:
+:caption: Main navigation 
+
+example
+demo-stuff
+```
+
+
 ```{toctree}
 :hidden:
 :caption: Project information
@@ -84,4 +99,5 @@ api/index
 bibliography
 license
 README <readme>
+CHANGELOG <changelog>
 ```

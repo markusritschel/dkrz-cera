@@ -47,14 +47,15 @@ dev = [
 ]
 lint = [
   "flake8",
-  "ruff"
+  "ruff",
+  "ty",
 ]
 test = [
   "pytest",
   "pytest-cov"
 ]
 docs = [
-  "furo",
+"furo",
   "jupyter-book",
   "jupyterbook-latex",
   "linkify-it-py",
@@ -83,6 +84,7 @@ docs = [
   "sphinxcontrib-images",
   "sphinxcontrib-mermaid",
   "sphinxcontrib-napoleon",
+
 ]
 
 
@@ -98,19 +100,28 @@ formats = "ipynb,py:percent,md:myst"
 [tool.pytest.ini_options]
 minversion = "6.0"
 testpaths = [
-    "tests",
-    "src",
+  "tests",
+  "src",
 ]
 addopts = [
-    "--doctest-modules",
-    "--doctest-continue-on-failure",
-    "-ra -v",
-    "--cov=./src",
-    "--cov-report=xml",
-    "--cov-report=html",
-    "--cov-report=term-missing"
+  "--doctest-modules",
+  "--doctest-continue-on-failure",
+  "-ra -v",
+  "--cov=./src",
+  "--cov-report=xml",
+  "--cov-report=html",
+  "--cov-report=term-missing"
 ]
+
+
+[tool.uv]
+package = true
 
 
 [tool.cruft]
-skip = [".git/"]
+skip = [
+  ".git/", 
+  "docs/**/*.md",
+  "tests", 
+  "README.md"
+]

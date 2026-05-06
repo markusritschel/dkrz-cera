@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/markusritschel/cookiecutter-pyproject",
-  "commit": "7d0c57565c9bab09fbfa8b9156e6d3b0e06e8b37",
+  "commit": "d260f78bf82d912fb98a0c72147b1561181a7a87",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -22,7 +22,7 @@
         "justfile"
       ],
       "_template": "https://github.com/markusritschel/cookiecutter-pyproject",
-      "_commit": "7d0c57565c9bab09fbfa8b9156e6d3b0e06e8b37"
+      "_commit": "d260f78bf82d912fb98a0c72147b1561181a7a87"
     }
   },
   "directory": null

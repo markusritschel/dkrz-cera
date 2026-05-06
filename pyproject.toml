@@ -43,16 +43,19 @@ dkrz-cera = "dkrz_cera.cli:main"
 [dependency-groups]
 dev = [
   {include-group = "lint"},
-  {include-group = "test"}
+  {include-group = "test"},
+  "pre-commit"
 ]
 lint = [
   "flake8",
+  "isort",
   "ruff",
   "ty",
 ]
 test = [
   "pytest",
-  "pytest-cov"
+  "pytest-cov",
+  "safety",
 ]
 docs = [
 "furo",

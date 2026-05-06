@@ -38,9 +38,14 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: ${{ !env.ACT }}
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Auto-apply labels
+        uses: actions/labeler@v5
+        # NOTE: requires a .github/labeler.yml file with appropriate rules
+
 
 
   build-documentation:

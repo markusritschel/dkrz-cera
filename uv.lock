@@ -2884,15 +2884,15 @@ wheels = [
 
 [[package]]
 name = "mystmd"
-version = "1.9.1"
+version = "1.10.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "nodeenv" },
     { name = "platformdirs" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/60/b7/97919f4e152ddb171f13f2453e34d77096ffe09bc3cd1ac9bd4ff3f5855d/mystmd-1.9.1.tar.gz", hash = "sha256:cfc79e6d2ca135f9507dc46b5a2a97cc48bff71165a3116ca0925bb60941f0a3", size = 2979312, upload-time = "2026-05-20T01:46:39.753Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/18/6e/117ae46e81709d74f8ca8fc444511d6f11cad5a01555618dad0beb905d81/mystmd-1.10.1.tar.gz", hash = "sha256:40b24f20f3c6b77b5292aac4a1b2f89c1915848dd796bb9f2c1d2af71622fc99", size = 2981748, upload-time = "2026-06-05T17:07:02.098Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bd/20/ee2996179452e9538008c3c465875a1459d03fa5afa5c7c42d2869489997/mystmd-1.9.1-py3-none-any.whl", hash = "sha256:9d83aae5d8df86a24403574fb44b7dcaebf7fe7c4508c19f53c6d7e1a6cf972b", size = 3011015, upload-time = "2026-05-20T01:46:37.728Z" },
+    { url = "https://files.pythonhosted.org/packages/7a/16/b71308f641c431936964459df6cdd4b941f8f4a42e9b53f1c8b249cd27e9/mystmd-1.10.1-py3-none-any.whl", hash = "sha256:353bac72edea3dd9335efcf5ec72f95f40509a46026e248b75a96cd373398054", size = 3013401, upload-time = "2026-06-05T17:06:59.902Z" },
 ]
 
 [[package]]

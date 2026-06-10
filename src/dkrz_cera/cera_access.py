@@ -45,9 +45,7 @@ class Cera:
         if user and password:
             self.__username = user
             self.__password = password
-            print(
-                f"CERA credentials found (user: {self.__username}) via environment variables"
-            )
+            print(f"CERA credentials found (user: {self.__username}) via environment variables")
             return
 
         # 2. .env file in cwd, then home directory
@@ -56,15 +54,11 @@ class Cera:
             if os.path.isfile(dotenv_path):
                 env_values = dotenv_values(dotenv_path)
                 user = env_values.get("CERA_USER")
-                password = env_values.get("CERA_PASSWORD") or env_values.get(
-                    "CERA_PASS"
-                )
+                password = env_values.get("CERA_PASSWORD") or env_values.get("CERA_PASS")
                 if user and password:
                     self.__username = user
                     self.__password = password
-                    print(
-                        f"CERA credentials found (user: {self.__username}) via {dotenv_path}"
-                    )
+                    print(f"CERA credentials found (user: {self.__username}) via {dotenv_path}")
                     return
 
         # 3. ~/.netrc fallback
@@ -74,9 +68,7 @@ class Cera:
                 x = re.findall(r"login\s+(\w+)\s+password\s+(\w+)", f.read())
                 if len(x) == 1:
                     self.__username, self.__password = x[0]
-                    print(
-                        f"CERA credentials found (user: {self.__username}) via {f.name}"
-                    )
+                    print(f"CERA credentials found (user: {self.__username}) via {f.name}")
                 elif len(x) > 1:
                     print(
                         f"More than one pair of username and password found. Please check your {f.name}."
@@ -268,9 +260,7 @@ class CeraQuery:
             ):
                 dataset_dir = os.path.join(download_path, *entry_name.split(" "))
                 jblob_file.write(f"mkdir -p {dataset_dir}\n")
-                jblob_file.write(
-                    f"$JBLOB --dataset {entry_acronym} --dir {dataset_dir}\n"
-                )
+                jblob_file.write(f"$JBLOB --dataset {entry_acronym} --dir {dataset_dir}\n")
                 jblob_file.write(f'echo "{entry_acronym}: $?" >> $LOG\n')
 
             jblob_file.write('\necho "' + "-" * 40 + '" >> $LOG')
@@ -329,8 +319,6 @@ class CeraQuery:
 if __name__ == "__main__":
     cera = Cera()
     # SEARCH_PATTERN = dict(q="cmip5*historicalNat *mon*tas")
-    cs = cera.search(
-        variable_s="tas", model_s="ACCESS1-0", qc_experiment_s="historical"
-    )
+    cs = cera.search(variable_s="tas", model_s="ACCESS1-0", qc_experiment_s="historical")
     # cs.to_jblob('~/work/cmip5_download')
     print(cs)

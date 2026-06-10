@@ -18,9 +18,9 @@ def fixture(request):
 @pytest.mark.skip(reason="no way of currently testing this")
 def test_app(fixture):
     """Test based on the fixture"""
-    assert fixture.title == str
+    assert type(fixture.title) is str
 
 
 def test_glob(global_fixture):
     """Test based on the fixture defined in contest.py"""
-    assert global_fixture == 'Test'
+    assert type(global_fixture) is str

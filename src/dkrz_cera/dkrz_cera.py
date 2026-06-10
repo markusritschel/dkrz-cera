@@ -7,15 +7,13 @@
 # Date:   2024-06-23
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
-from __future__ import absolute_import, division, print_function, with_statement
-
 import logging
 
 logger = logging.getLogger(__name__)
 
 
 def dummy_function(a: int, b: str) -> str:
-    """This is a dummy function to showcase auto-generation of source code documentation. 
+    """A dummy function to showcase auto-generation of source code documentation.
     Takes an integer and string as arguments and returns a string.
     
     Parameters

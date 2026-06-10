@@ -28,20 +28,20 @@ def cera_query(cera):
 
 
 def test_cera(cera):
-    assert type(cera.login_url) == str
+    assert type(cera.login_url) is str
 
 
 def test_cera_query(cera_query):
-    assert type(cera_query) == CeraQuery
-    assert type(cera_query.df) == pd.DataFrame
-    assert type(cera_query.parent) == Cera
+    assert type(cera_query) is CeraQuery
+    assert type(cera_query.df) is pd.DataFrame
+    assert type(cera_query.parent) is Cera
     assert len(cera_query.df) == 13
 
 
 def test_cera_to_jblob(cera_query, tmpdir):
     jblob_file = tmpdir.join("jblob_pytest_file.sh")
     cera_query.to_jblob(tmpdir.join("/donwloads/"), jblob_file)
-    assert os.path.exists(jblob_file) == True
+    assert os.path.exists(jblob_file)
     os.remove(jblob_file)
 
 

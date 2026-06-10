@@ -2,8 +2,8 @@
 # -*- coding utf-8 -*-
 """Smoke tests for the dkrz-cera CLI."""
 
-import pytest
 from click.testing import CliRunner
+import pytest
 
 from dkrz_cera.cli import main
 

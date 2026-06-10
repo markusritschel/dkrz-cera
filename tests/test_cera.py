@@ -22,9 +22,7 @@ def cera():
 
 @pytest.fixture
 def cera_query(cera):
-    return cera.search(
-        variable_s="tas", model_s="ACCESS1-0", qc_experiment_s="historical"
-    )
+    return cera.search(variable_s="tas", model_s="ACCESS1-0", qc_experiment_s="historical")
 
 
 def test_cera(cera):

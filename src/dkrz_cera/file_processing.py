@@ -29,25 +29,29 @@ def unzip_files(path):
     count_netcdfs = 0
     while True:
         # all_zip_files = glob.glob('*.zip')
-        all_zip_files = [x for x in path.rglob('*.zip') if x.is_file()]
+        all_zip_files = [x for x in path.rglob("*.zip") if x.is_file()]
         count_zips += len(all_zip_files)
         if not all_zip_files:
             print("No remaining zip files found.")
             break
         for zip_file in all_zip_files:
             # TODO: maybe parallel processing?
-            number_netcdfs_in_zip = len([f for f in ZipFile(zip_file).namelist() if f.endswith('.nc')])
+            number_netcdfs_in_zip = len(
+                [f for f in ZipFile(zip_file).namelist() if f.endswith(".nc")]
+            )
             count_netcdfs += number_netcdfs_in_zip
             print(f"Unpacking {number_netcdfs_in_zip} netCDF files from {zip_file}...")
             ZipFile(zip_file).extractall(path=os.path.dirname(zip_file))
             print("Unpacking successfully finished. Remove zip file.")
             os.remove(zip_file)
-    print(f"{count_netcdfs} netCDF files out of {count_zips} zip files successfully extracted. "
-          f"Deleted zip files after extraction.")
+    print(
+        f"{count_netcdfs} netCDF files out of {count_zips} zip files successfully extracted. "
+        f"Deleted zip files after extraction."
+    )
 
     return
 
 
-if __name__ == '__main__':
-    DOWNLOAD_DIR = os.path.join(os.getenv('HOME'), "work/cmip5-download")
+if __name__ == "__main__":
+    DOWNLOAD_DIR = os.path.join(os.getenv("HOME"), "work/cmip5-download")
     unzip_files(DOWNLOAD_DIR)

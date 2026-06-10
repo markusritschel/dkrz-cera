@@ -11,7 +11,6 @@ import os
 from pathlib import Path
 from zipfile import ZipFile
 
-
 __all__ = ["unzip_files"]
 
 
@@ -37,9 +36,9 @@ def unzip_files(path):
             break
         for zip_file in all_zip_files:
             # TODO: maybe parallel processing?
-            netcdfs_in_zip = len([f for f in ZipFile(zip_file).namelist() if f.endswith('.nc')])
-            count_netcdfs += netcdfs_in_zip
-            print("Unpacking {} netCDF files from {}...".format(netcdfs_in_zip, zip_file))
+            number_netcdfs_in_zip = len([f for f in ZipFile(zip_file).namelist() if f.endswith('.nc')])
+            count_netcdfs += number_netcdfs_in_zip
+            print(f"Unpacking {number_netcdfs_in_zip} netCDF files from {zip_file}...")
             ZipFile(zip_file).extractall(path=os.path.dirname(zip_file))
             print("Unpacking successfully finished. Remove zip file.")
             os.remove(zip_file)

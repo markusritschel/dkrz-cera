@@ -11,9 +11,9 @@ import os
 import re
 import shutil
 
+from dotenv import dotenv_values
 import pandas as pd
 import requests
-from dotenv import dotenv_values
 
 __all__ = ["Cera", "CeraQuery"]
 

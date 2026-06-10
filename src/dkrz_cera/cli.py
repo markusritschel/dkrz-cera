@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding utf-8 -*-
 #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -7,21 +6,23 @@
 # Date:   2024-06-23
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
-"""Console script for dkrz-cera."""
+"""CLI script for dkrz_cera."""
 
 import sys
 
 import click
 from rich.console import Console
 from rich.table import Table
+import typer
 
+app = typer.Typer()
 console = Console()
 
 
 @click.group()
 def main():
-    """dkrz-cera: Command-line interface to the CERA database at DKRZ."""
-    pass
+    """CLI script for dkrz_cera."""
+    ...
 
 
 @main.command()

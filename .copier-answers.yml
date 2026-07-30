@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: cfda6529d06a08c5f4402b1444ec3accab94a22d
+_src_path: gh:markusritschel/cookiecutter-pyproject
+user_name: Markus Ritschel
+user_email: git@markusritschel.de
+github_user: markusritschel
+project_name: DKRZ-CERA
+project_slug: dkrz-cera
+package_name: dkrz_cera
+is_research_project: true
+project_description: An interface to the CERA database of the DKRZ (Deutsches Klimarechenzentrum)
+project_version: 0.1.0
+command_line_interface: Click
+project_license: MIT license
+docs_engine: Sphinx

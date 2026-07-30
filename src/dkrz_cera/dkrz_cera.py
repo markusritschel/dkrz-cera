@@ -7,6 +7,8 @@
 # Date:   2024-06-23
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
+"""Placeholder module of the package namesake; holds no domain logic yet."""
+
 import logging
 
 logger = logging.getLogger(__name__)

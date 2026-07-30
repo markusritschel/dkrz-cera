@@ -7,6 +7,8 @@
 # Date:   17/06/2020
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
+"""Query the CERA/WDCC climate data archive and turn matches into jblob download scripts."""
+
 import os
 import re
 import shutil
@@ -26,6 +28,8 @@ class JSONObject:
 
 
 class Cera:
+    """Entry point to the CERA archive, holding the credentials and the search interface."""
+
     def __init__(self):
         self.login_url = "https://cera-www.dkrz.de/WDCC/ui/cerasearch/login"
         self.__username = None
@@ -140,18 +144,10 @@ class Cera:
                 return None
 
             for entry in json_dict.response.docs:
-                # write entry_acronym_s into jblob_file
-                values = [
-                    entry.entry_acronym_s,
-                    entry.model_s,
-                    entry.qc_experiment_s,
-                    # entry.topic_name_ss,
-                    entry.variable_s,
-                    entry.frequency_s,
-                    entry.entry_name_s,
-                    entry.project_acronym_ss,
-                    entry.format_acronym_s,
-                ]
+                # Each entry carries the facets later exposed as DataFrame columns by
+                # `CeraQuery.df`: entry_acronym_s, model_s, qc_experiment_s, variable_s,
+                # frequency_s, entry_name_s, project_acronym_ss, format_acronym_s
+                # (plus topic_name_ss, which is currently unused).
                 results_dict[entry.entry_acronym_s.replace(" ", ".")] = entry
 
             start += rows
@@ -165,8 +161,10 @@ class Cera:
 
 
 class CeraQuery:
-    """This returns an instance similar to the intake-esm collection class. It provides a search() method as  well as an
-    interfaces to Pandas to view the results as a pd.DataFrame
+    """A result set similar to the intake-esm collection class.
+
+    Wraps the entries returned by :meth:`Cera.search` and provides an interface to Pandas
+    to view them as a :class:`pandas.DataFrame`.
     """
 
     def __init__(self, parent, results_dict):
@@ -175,10 +173,12 @@ class CeraQuery:
         self.__results_dict = results_dict
 
     def __str__(self):
+        """Display the result summary and return an empty string (see `__repr__`)."""
         self.__repr__()
         return ""
 
     def __repr__(self):
+        """Display a table of unique values per facet and return an empty string."""
         from IPython.display import display
 
         display(pd.DataFrame(self.df.nunique(), columns=["nunique"]))

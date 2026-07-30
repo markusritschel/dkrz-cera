@@ -48,7 +48,7 @@ def search(variable, model, experiment, frequency, project, fmt):
         cera = Cera()
         result = cera.search(**query)
     except Exception as exc:
-        raise click.ClickException(f"Search failed: {exc}")
+        raise click.ClickException(f"Search failed: {exc}") from exc
 
     if result is None:
         raise click.ClickException("No datasets found matching the given criteria.")
@@ -91,7 +91,7 @@ def download(variable, model, experiment, path, frequency, project, fmt, jblob_f
         cera = Cera()
         result = cera.search(**query)
     except Exception as exc:
-        raise click.ClickException(f"Search failed: {exc}")
+        raise click.ClickException(f"Search failed: {exc}") from exc
 
     if result is None:
         raise click.ClickException("No datasets found matching the given criteria.")
@@ -99,7 +99,7 @@ def download(variable, model, experiment, path, frequency, project, fmt, jblob_f
     try:
         result.to_jblob(path, file=jblob_file)
     except Exception as exc:
-        raise click.ClickException(f"Failed to create jblob script: {exc}")
+        raise click.ClickException(f"Failed to create jblob script: {exc}") from exc
 
 
 @main.command()
@@ -111,7 +111,7 @@ def unzip(path):
     try:
         unzip_files(path)
     except Exception as exc:
-        raise click.ClickException(f"Unzip failed: {exc}")
+        raise click.ClickException(f"Unzip failed: {exc}") from exc
 
 
 if __name__ == "__main__":

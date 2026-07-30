@@ -7,6 +7,8 @@
 # Date:   18/06/2020
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
+"""Post-processing helpers for data retrieved from CERA, such as recursive unzipping."""
+
 import os
 from pathlib import Path
 from zipfile import ZipFile

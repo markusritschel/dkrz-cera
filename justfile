@@ -50,6 +50,7 @@ VERSION := `grep -m1 '^version' pyproject.toml | sed -E 's/version = "(.*)"/\1/'
 version:
     @echo "Current version is {{VERSION}}"
 
+
 # Compile the documentation
 docs:
     uv run --group docs sphinx-build -b html docs/ docs/_build/html
@@ -102,3 +103,4 @@ test-gh-actions:
 publish:
     uv build
     uv publish
+

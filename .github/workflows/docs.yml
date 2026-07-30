@@ -45,6 +45,7 @@ jobs:
       id-token: write
     steps:
       - name: Deploy documentation
+        id: deployment  # referenced by the environment url above
         if: ${{ !env.ACT }}
         uses: actions/deploy-pages@v4
         with:

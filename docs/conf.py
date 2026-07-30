@@ -1,7 +1,7 @@
 project = "DKRZ Cera"
 author = "Markus Ritschel"
 copyright = "2024"
-title = "DKRZ Cera Documentation 2"
+title = "DKRZ Cera Documentation"
 html_title = "DKRZ Cera"
 html_logo = "_static/python-logo.svg"
 

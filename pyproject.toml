@@ -1,44 +1,40 @@
 [project]
-name = "dkrz_cera"
-description = "This package provides an interface to the CERA database of the DKRZ (Deutsches Klimarechenzentrum)."
-version = "0.1.0"
+name = "dkrz-cera"
+description = "An interface to the CERA database of the DKRZ (Deutsches Klimarechenzentrum)"
 authors = [
   {name = "Markus Ritschel", email = "git@markusritschel.de"},
 ]
 readme = "README.md"
 license = {file = "LICENSE"}
-requires-python = ">= 3.10"
+version = "0.1.0"
+requires-python = ">=3.10"
 dependencies = [
-  "click",
   "colorama",
   "dask",
   "Deprecated",
-  "docopt",
   "ipykernel",
   "ipython",
   "ipywidgets",
-  "jupytext",
-  "jupyterbook-latex",
   "jupyterlab",
   "jupytext",
   "marimo",
   "markdown",
   "matplotlib",
-  "mystmd",
-  "nodejs",
   "numpy",
   "pandas",
-  "pandoc",
   "python-dotenv",
   "rich",
   "tqdm",
-  "typer",
-  "xarray"
+  "xarray",
+  "click",
 ]
 
 
+# All three CLI flavours expose the entry point as `app`.
 [project.scripts]
-dkrz-cera = "dkrz_cera.cli:main"
+dkrz-cera = "dkrz_cera.cli:app"
+
+
 
 [dependency-groups]
 dev = [
@@ -90,9 +86,10 @@ docs = [
 
 
 [build-system]
-requires = ["uv_build>=0.11.19,<0.12.0"]
+requires = ["uv_build>=0.10.2,<0.11.0"]
 build-backend = "uv_build"
- 
+
+
 
 [tool.jupytext]
 formats = "ipynb,py:percent,md:myst"
@@ -107,7 +104,10 @@ testpaths = [
 addopts = [
   "--doctest-modules",
   "--doctest-continue-on-failure",
-  "-ra -v",
+  # NOTE: one flag per list entry. "-ra -v" as a single entry is parsed as
+  # `-r` with the value "a -v", which silently swallows the -v.
+  "-ra",
+  "-v",
   "--cov=./src",
   "--cov-report=xml",
   "--cov-report=html",
@@ -117,13 +117,3 @@ addopts = [
 
 [tool.uv]
 package = true
-
-
-[tool.cruft]
-skip = [
-  ".git/", 
-  "docs/**/*.md",
-  "**/*.bib",
-  "tests", 
-  "README.md"
-]
